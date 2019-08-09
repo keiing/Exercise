@@ -1,3 +1,4 @@
+@charset "utf-8";
 /* 为了简化代码重用性，封装一个居中css */
 .text-align{
     text-align: center;
