@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    数据纯css进行更改
+    学习框架读取json文件
+    <div>
+        <div id="ceshi-detail">
+            <p id="filterate">filterate</p>
+            内容1
+            <p class id="names"></p>
+            <p class="" id="upass"></p>
+        </div>
+        <div id="ceshi-inverst">
+                <p class id="names"></p>
+                <p class="" id="upass"></p>
+                <p id="totalDueYield"></p>
+        </div>
+        <div id="ceshi-list">
+
+        </div>
+    </div>
+<script src="module-driver/module-driver2.js"></script>
+    <script>
+    (function(window,undefined){
+        function $(elem,content){
+            if(!content){
+                var query=document.querySelectorAll(elem);
+                if(query.length>1){
+                    return query;
+                }
+                return query[0];
+            }else{
+                var query=content.querySelectorAll(elem);
+                if(query.length>1){
+                    return query;
+                }
+                return query[0];
+            }
+        }
+        
+        var module_config={
+            "detail":{
+                "model":null,
+                "render":function(){
+                    console.log("detail")
+                    for(var p in this.model){
+                        if(elem=$("#"+p,this.view)){
+                            if(elem.length>1)for(var i=0;i<elem.length;i++){elem[i].textContent=this.model[p]}
+                            else{elem.textContent=this.model[p]}
+                        }
+                    }
+                },
+                "view":$('#ceshi-detail')
+            },
+            "inverst":{
+                "model":null,
+                "render":function(){
+                    console.log("inverst")
+                    console.log(this.model)
+                },
+                "view":$('#ceshi-inverst')
+            },
+            "list":{
+                "model":null,
+                "render":function(){
+                    console.log("list")
+                },
+                "view":null
+            },
+            "mingfan":{
+                "model":null,
+                "render":function(){
+                    console.log('mingfan')
+                },
+                "view":null
+            }
+        }
+        function ajax(url,i){
+            return new Promise((resolved,rejected)=>{
+            var xhr=new XMLHttpRequest;
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState==4&&xhr.status==200){
+                    //xhr.responseURL获取返回地址的决定路径
+                var meta=(JSON.parse(xhr.responseText));
+                if(i=="resolved")ModuleDriver.init(meta,module_config);
+                else resolved(meta);
+                }
+            }
+            xhr.open('get',url,true);
+            xhr.send();
+            })
+        }
+        ajax('./data.json',"resolved");
+        $('#filterate').addEventListener('click',function(){
+            ajax('./filter.json').then(result=>ModuleDriver.load(result))
+            
+        },false)
+    })(window)
+    </script>
+</body>
+</html>

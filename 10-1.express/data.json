@@ -1,0 +1,15 @@
+{
+    "detail":{
+    "names":"张三",
+    "upass":123456
+    },
+    "inverst":{
+        "inverst":"inverst"
+    },
+    "list":{
+        "list":"list"
+    },
+    "mingfan":{
+        "mingfan":"mingfan"
+    }
+}
