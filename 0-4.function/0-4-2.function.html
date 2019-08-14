@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    /*
+    * param {*} selector 选择器
+    jquery.prototype=jquery.init.prototype=jquery.fn jQuery中利用引动类型
+    */ 
+    function java(selector){
+     return new java.prototype.init(selector);
+    }
+    java.prototype={
+        init:function(selector){
+            this.$=selector;
+        }
+    }
+    console.log(java('div'));
+    (function(window){
+
+    })(window);
+
+    function copy(target,source){
+        for(var item in source){
+            if(typeof source[item]==='object'){
+                target[item]={};
+                copy(target[item],source[item]);
+            }
+            target[item]=source[item];
+        }
+        return target
+    }
+    function a(){
+        this.b='123'
+    }
+    a.prototype.af=function(){
+        console.log(this.b);
+    }
+    function b(){
+        this.b=456;
+        // a.call(this);
+    }
+    //用一个不常用的对象存储对象
+    function bb(){}
+    //进行复制
+    bb.prototype=a.prototype;
+    //再次进行赋值
+    b.prototype=new bb();
+    //这样就成功了
+    b.prototype.cf=function(){
+        console.log(this.b);
+    }
+    console.log(b.prototype)
+    var c=new b();
+    console.log(c.af,'c')
+    console.log(c.af())
+    var d=new a();
+    console.log(d.af());
+    </script>
+</body>
+</html>
