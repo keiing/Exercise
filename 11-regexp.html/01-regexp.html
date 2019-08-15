@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * \ 转移符号
+         * \n 换行 console.log(str)控制台才能看出来区别
+         * \t Tab缩写一般tab缩进就是4个空格，根据系统而定
+         * \r\n 一般正常系统回车就是\r\n linux系统没有\r功能就一个\n
+         * */
+        var str="abcde\r\nfg";
+        console.log(str)
+        var innerhtml1="\
+        <div>div</div>\
+        <span>span</span>\
+        ";
+        var innerhtml2=
+        "<div>div2</div>"+
+        "<span>span2</span>";
+        var innerhtml3=`
+        <div>div3</div>
+        <span>span3</span>
+        `;
+        document.body.innerHTML=innerhtml3
+    </script>
+</body>
+</html>

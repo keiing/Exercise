@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var str="aaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccc";
+        var reg=/(\w)\1*/g;
+        console.log(str.replace(reg,"$1"));//abc
+
+        //百度14年的最后一道题
+        str='100000000000';
+        console.log(str.length)
+        //变成 100.000.000;
+        newReg=/(?=(\B)(\d{3})+$)/g;
+        console.log(str.replace(newReg,"."));
+    </script>
+</body>
+</html>

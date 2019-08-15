@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        /**
+         * ?    打破贪婪模式
+         * /a{1,3}?/g   能取少不取多
+         * /a*?/g   能取0不取多
+        */
+        /a+?/; //能少就不会多
+        /a{1,3}?/g;
+        console.log('aaa'.match(/a{1,3}?/g));
+        /**
+         * 正则表达式有个名字叫贪婪匹配原则 能匹配多就不匹配少
+         * RegExp
+         * 两种创建方式
+         * 1.直接量
+         * 1.new RegExp();创建RegExp对象
+         * 个人推荐用直接量
+         * 正则表达式的作用:匹配特殊字符或有特殊搭配原则的字符的最佳选择。*/
+        /**
+         * i 缩写->ignoreCase  忽略大小写
+         * g->global 执行全局匹配(查找所有匹配而非在找到第一个匹配后停止)
+         * m ->执行多行匹配
+         * */
+        /**
+         * [0-9A-Za-z]
+         * [] 一个[]代表一位 括号中的内容代表区间的意思 如果值相同可以使用简写 [0-9]{0,5}最少1位任意数字，最多5位连续数字
+         * [^] 代表非    除了的意思 [^a][^b] 第一位不是a第二位不是b
+         * (a)\1   这种情况是 表达式匹配 第一个括号(第一个括号)匹配的内容并且引用一次再次匹配 console.log("aaaa".match(/(a)\1/g));//["aa","aa"] console.log("aaaa".match(/(a)\1\1\1/g));//["aaaa"]
+         * (b)\2   表达式匹配 第二个括号(第而个括号)匹配的内容并且引用一次再次匹配 console.log("aabb".match(/(a)\1(b)\2/g));
+         * (abc|bcd)[0-9]  abc1/bcd3都能匹配成功
+         * \d   [0-9]
+         * \D   [^0-9]
+         * \n   回车符 匹配\t \n "abc\n".match([c\n]) "ab\tc".match("ab\t");
+         * \s   查找空白字符 ----\s ===[\t\n\r\v\f ] \n空格算 - \t制表符 - \r回车符 - \f换行符 - \v垂直制表符 - 空格
+         * \S   \S===[^\s]
+         * \w   \w===[0-9A-z_] world
+         * \W   \W===[^\w] 可以匹配 b*cd2 匹配\w以外的
+         * \b   \b===单词边界 "abc cde fgh".match(/\bcde\s\bfgh\b/g); ["cde fgh"] 
+         * \B   \B===非单词边界 "abc cde fghg".match(/\bcde\s\bfgh\B/g) ["cde fgh"]
+         * \uxxx   \uxxx    console.log("你身体不好吗".match(/[\u0000-\uffff]/g))
+         * .    .===[^\r\n] 匹配除了 回车空格的所有任意一个字符
+         * 匹配所有 [\d\D]====[\s\S]
+        */
+       //量词
+       /**
+         * n+   {1,}
+         * n*   {0,}
+         * n?   {0,1}
+         * n{x} {x} x任意数字
+         * n{x,y}   {x,y} x-y的区间
+         * n{x, }   {x,} x-正无穷
+         * ^n   匹配任何开头为n的字符串
+         * n$   匹配任何结尾为n的字符串
+         * ?=n  匹配任何其后紧接指定字符串n的字符串  正向预查 正向断言
+         * ?!n  匹配任何其后没有紧接指定字符串n的字符串
+       */
+       console.log('abc'.match(/^abc$/g))
+        var str="abcdefabcd";
+        //1.直接量
+         var reg=/abc/ig;
+         //2.new RegExp 创建RegExp对象
+         var newReg=new RegExp('abc','i');
+
+
+         //match 返回匹配结果
+         console.log("abcdef\nabcd".match(/^abc/gm))
+         //test 返回只有boolean值
+         console.log(reg.test(str));//测试这个字符串中是后含有我规定的片段
+
+
+         //检验一个字符串首位是否含有数组
+         var regsw=/^[0-9]|([0-9]$)/
+         console.log('123aerrfadsf'.match(regsw))
+         //检验一个字符串首位是否都含有数组
+         var regswd=/^\d[\s\S]*\d$/
+         console.log('12abc2'.match(regswd))
+    </script>
+</body>
+</html>
