@@ -5,7 +5,7 @@
             let school={}//储存对象
             return (key,value)=>{
                 school[key]=value//如school['uname']='zhangsan'
-                if(--times==0){//利用闭包判断指定次数是否为0
+                if(--times===0){//利用闭包判断指定次数是否为0
                     callback(school)//指定次数为零后执行
                 }
             }
@@ -15,4 +15,10 @@
         });
             afters('uname','zhangsan');//uname ->key zhangsan->value
             afters('upad','242124242');
+        var newAfters=after(3,()=>{
+            console.log("3次后调用")
+        });
+        newAfters();
+        newAfters();
+        newAfters();
 </script>
