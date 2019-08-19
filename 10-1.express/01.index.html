@@ -25,62 +25,11 @@
 
         </div>
     </div>
+<script src="module-$.js"></script>
+<script src="module_config.js"></script>
 <script src="module-driver/module-driver2.js"></script>
     <script>
     (function(window,undefined){
-        function $(elem,content){
-            if(!content){
-                var query=document.querySelectorAll(elem);
-                if(query.length>1){
-                    return query;
-                }
-                return query[0];
-            }else{
-                var query=content.querySelectorAll(elem);
-                if(query.length>1){
-                    return query;
-                }
-                return query[0];
-            }
-        }
-        
-        var module_config={
-            "detail":{
-                "model":null,
-                "render":function(){
-                    console.log("detail")
-                    for(var p in this.model){
-                        if(elem=$("#"+p,this.view)){
-                            if(elem.length>1)for(var i=0;i<elem.length;i++){elem[i].textContent=this.model[p]}
-                            else{elem.textContent=this.model[p]}
-                        }
-                    }
-                },
-                "view":$('#ceshi-detail')
-            },
-            "inverst":{
-                "model":null,
-                "render":function(){
-                    console.log("inverst")
-                    console.log(this.model)
-                },
-                "view":$('#ceshi-inverst')
-            },
-            "list":{
-                "model":null,
-                "render":function(){
-                    console.log("list")
-                },
-                "view":null
-            },
-            "mingfan":{
-                "model":null,
-                "render":function(){
-                    console.log('mingfan')
-                },
-                "view":null
-            }
-        }
         function ajax(url,i){
             return new Promise((resolved,rejected)=>{
             var xhr=new XMLHttpRequest;
