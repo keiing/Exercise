@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <script>
-    //高阶函数中包含 柯里化 可以保留参数 bind
-    const cheType=(type)=>{
-       return (content)=>Object.prototype.toString.call(content)===`[object ${type}]`
-    }
-    let types=['Number','String','Boolean','Object','Array','Null']
-    let isType={};
-    types.forEach(type=>isType['is'+type]=cheType(type));
-    console.log(isType.isString('123'));
-    console.log(isType.isNumber(123))
-
-    //函数柯里化怎么实现
-    
-    //通用的柯里化
-    const add=(a,b,c,d,e)=>{
-        return a+b+c+d+e;
-    }
-    const curring=(fn,arr=[])=>{
-        let len=fn.length
-        return (...args)=>{
-            arr=arr.concat(args);
-            if(arr.length<len){
-                return curring(fn,arr)
-            }
-            return fn(...arr)
+        //柯里化：就是将一个函数 拆分成多个函数
+        //高阶函数中包含 柯里化 可以保留参数 bind
+        const cheType = (type) => {
+            return (content) => Object.prototype.toString.call(content) === `[object ${type}]`
         }
-    }
-    let r=curring(add)(1)(2)(3,4,5);
-    console.log(r);
+        let types = ['Number', 'String', 'Boolean', 'Object', 'Array', 'Null']
+        let isType = {};
+        types.forEach(type => isType['is' + type] = cheType(type));
+        console.log(isType.isString('123'));
+        console.log(isType.isNumber(123))
+
+        //函数柯里化怎么实现
+
+        //通用的柯里化
+        const add = (a, b, c, d, e) => {
+            return a + b + c + d + e;
+        }
+        const curring = (fn, arr = []) => {
+            let len = fn.length
+            return (...args) => {
+                arr = arr.concat(args);
+                if (arr.length < len) {
+                    return curring(fn, arr)
+                }
+                return fn(...arr)
+            }
+        }
+        let r = curring(add)(1)(2)(3, 4, 5);
+        console.log(r);
     </script>
 </body>
+
 </html>
