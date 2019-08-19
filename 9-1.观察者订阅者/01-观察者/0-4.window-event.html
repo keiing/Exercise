@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //低耦合
+        //封装全局的发布订阅模式
+        let Event = (function () {
+            let list = {},
+                listen,
+                targger,
+                remove;
+            listen = function (key, fn) {
+                (list[key] || (list[key] = [])).push(fn);
+            };
+            targger = function () {
+                let key = Array.prototype.shift.call(arguments);
+                let fns = list[key];
+                if (!fns || fns.length === 0) {
+                    return;
+                }
+                for (let i = 0, fn; fn = fns[i++];) {
+                    fn.apply(this, arguments);
+                }
+            };
+            remove = function (key, fn) {
+                let fns = list[key];
+                if (!fns) {
+                    return false;
+                }
+                if (!fn) {
+                    fns.length = 0;
+                } else {
+                    for (let i = fns.length; i >= 0; i--) {
+                        let _fn = fns[i];
+                        _fn === fn && (fns.splice(i, 1))
+                    }
+                }
+            }
+            return {listen:listen,targger:targger,remove:remove}
+        })();
+        /*
+            $.ajax('http:xxx',function(data){
+                Obj.trigger('success',data);
+            })
+            Obj.listen('success',function(){
+                //initData(data);渲染
+            });
+            Obj.listen('err',function(){
+                //animate(data);动画
+        })*/
+        Event.listen('big',function(size){
+            console.log('小明111:' + size + "方米")
+        })
+        Event.listen('bi2',function(size){
+            console.log('小明',size)
+        })
+        Event.targger('big',100);
+
+        //缺点
+        /*
+            创建时候消耗内存
+            订阅过后，如数据会存到内存中
+            不要滥用观察者订阅者模式
+        */
+    </script>
+</body>
+
+</html>

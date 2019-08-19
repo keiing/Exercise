@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var event = {
+            list: {},
+            listen: function (key, fn) {
+                (this.list[key] || (this.list[key] = [])).push(fn);
+            },
+            trigger: function () {
+                //去除消息类型 类数组转换成数组
+                let key = Array.prototype.shift.call(arguments);
+                let fns = this.list[key];
+                if (!fns || fns.length === 0) {
+                    return;
+                }
+                console.log(fns)
+                for (let i = 0, fn; fn = fns[i++];) {
+                    fn.apply(this, arguments);
+                }
+            }
+        }
+        //取消订阅
+        event.remove=function(key,fn){
+            let fns=this.list[key];
+            if(!fns){return;}
+            //如果没有选择取消，就全部清空
+            if(!fn){
+                !fn && (fns.length=0);
+            }else{
+                for(let i=fns.length-1;i>=0;i--){
+                    let _fn=fns[i];
+                    _fn===fn && (fns.splice(i,1))
+                }
+            }
+        }
+        //所有的普通对象都具有发布订阅功能
+        let initEvent = function (obj) {
+            for (let i in event) {
+                obj[i] = event[i]
+            }
+        }
+
+        //使用
+        let houseObj = {};
+        initEvent(houseObj)
+        //小明的要求
+        houseObj.listen("big", fn1=function (size) {
+            console.log('小明111:' + size + "方米")
+        })
+        houseObj.listen("big", fn2=function (sxe) {
+            console.log('小明2222:' + sxe + "方米")
+        });
+        houseObj.remove('big')
+        houseObj.trigger('big', 100);
+        console.log(houseObj)
+
+        //如果实际运用
+        /*
+            $.ajax("http:xxx",function(data){
+                //initData(data);渲染
+                //animate(data);动画
+            })
+        */
+        
+    </script>
+</body>
+
+</html>

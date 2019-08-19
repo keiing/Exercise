@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //高耦合
+        //发布者
+        let houseObj = {};
+        //花名册 缓存列表
+        houseObj.list = {};
+        //增加订阅者
+        houseObj.listen = function (key, fn) {
+            //key判断是否已经订阅这个消息
+            // if(!this.list[key]){
+            //     this.list[key]=[];
+            // }
+            //订阅消息添加数组里面
+            // this.list[key].push(fn);
+            (this.list[key] || (this.list[key] = [])).push(fn);
+        }
+        //便利数组 挨个打短信
+        houseObj.trigger = function () {
+            let key = Array.prototype.shift.call(arguments); //去除订阅者
+            //去除对应回调函数的集合
+            let fns = this.list[key];
+            //如果用户没有订阅就没有这个key
+            console.log(this.list)
+            if (!fns || fns.length === 0) {
+                return;
+            }
+            for (let i = 0, fn; fn = fns[i++];) {
+                fn.apply(this, arguments); //arguments是发布订阅附带的消息
+            }
+        }
+        //小明的要求
+        houseObj.listen("big", function (size) {
+            console.log('小明:' + size + "方米")
+        })
+        //小绿的要求
+        houseObj.listen('boy', function (size) {
+            console.log('小绿:' + size + "方米")
+        })
+        houseObj.trigger('big', 100);
+        houseObj.trigger('boy', 80);
+    </script>
+</body>
+
+</html>
