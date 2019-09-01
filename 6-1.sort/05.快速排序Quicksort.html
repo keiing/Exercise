@@ -17,6 +17,7 @@
   </div>
   <div id='inner'></div>
   <script>
+    'use strict'
     var arr = [1, 454, 536543, 6457654765, 58758758, 76587685, 67456456]
     arr => {
       const len = arr.length
@@ -48,26 +49,40 @@
     原理：随便选一个数，把原数组里比这个数小的放左边，比这个数大的放右边，然后再把左边和右边的数组重复上面的操作，最后完成排序
     */
     var newArr = [131, 6, 2, 4, 12, 52, 31, 42, 51, 424, 13213];
-    //网上见的阮一峰大佬
-    function quickSort(arr) {
-      if (arr.length <= 1) {
-        return arr;
+    //网上见的阮一峰大佬 个人做了一些修改
+    function quickSort(arr=[],isTrue) {
+      if(arr.length<=1){return arr}
+      
+      if(!isTrue||arguments[1]===true){
+      var arrClone=[];
+      //是否影响原数 不传参数就默认为不影响
+      for(let item in arr){
+        arrClone.push(arr[item])
+        item=null;
       }
-      var midI = Math.floor((arr.length - 1) / 2); //随便取了个数，这里拿了中间的index
-      var mid = arr.splice(midI, 1)[0]; //拿到中间的数，同时把原数组这个数删掉
-      var left = []; //用来存放比这个数小的数组
-      var right = []; //用来存放比这个数大的数组
-      for (var i = 0; i < arr.length; i++) { //循环原数组，把数放进数组里
-        if (arr[i] < mid) {
-          left.push(arr[i])
+      }else{
+        arrClone=arr;
+      }
+
+      let midI = Math.floor((arrClone.length - 1) / 2); //midI随便取了个数，这里拿了中间的index
+      let mid = arrClone.splice(midI, 1)[0]; //mid拿到中间的数，同时把原数组这个数删掉
+      let left = [],right = []; //left用来存放比这个数小的数组
+     //rigth用来存放比这个数大的数组
+      for (let i = 0,ai; i < arrClone.length,ai=arrClone[i]; i++) { //循环原数组，把数放进数组里
+        ai<mid?left.push(ai):right.push(ai);
+        /*  直接使用三目
+        if (arrClone[i] < mid) {
+          left.push(arrClone[i])
         } else {
-          right.push(arr[i])
+          right.push(arrClone[i])
         }
+        */
       }
-      return quickSort(left).concat([mid], quickSort(right)) //递归排序
+      // arr=(quickSort(left).concat(quickSort([mid]),quickSort(right)));
+      return (quickSort(left).concat(mid,quickSort(right))) //递归排序
     }
     console.time('quickSort')
-    console.log(quickSort(newArr))
+   console.log(quickSort(newArr));
     console.timeEnd('quickSort')
     /*
     当面对一个有大量重复的数据的序列时，选取 pivot 的快速排序有可能会退化成一个 O(n²) 的算法
