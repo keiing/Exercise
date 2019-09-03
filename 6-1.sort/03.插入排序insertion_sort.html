@@ -51,15 +51,12 @@
         */
         let newArr = [1, 4524, 5425565436, 54747, 6764, 234, 14, 254, 53465, 3653623, 42134, 1432]
         const insertionSort = arr => {
-            const len = arr.length - 1
             var j, temp
-            for (let i = 0; i < len; ++i) {
+            for (let i = 0,len=arr.length-1; i < len; ++i) {
                 j = i /* 存储当前索引，便于后续与数组其他元素对比 */
                 temp = arr[i + 1]
-
                 while (j + 1 > 0 && arr[j] > temp) {
                     arr[j + 1] = arr[j]
-                    // arr[i - 1] = arr[i]
                     j--;
                 }
                 arr[j + 1] = temp
@@ -70,6 +67,23 @@
         console.log(insertionSort(newArr))
         console.timeEnd('Sort')
         inner.innerHTML = `方法1.<br>${insertionSort}`
+
+
+
+        /**排序2*/
+        const insertionSort2=(arr=[])=>{
+            for(let i=0,content,j,len=arr.length;i<len;i++){
+                content=arr[i];
+                for(j=i;j>0&&arr[j-1]>content;j--){
+                    arr[j]=arr[j-1];
+                }
+                arr[j]=content;
+            }
+                return arr;
+        }
+        console.time('Sort')
+        console.log(insertionSort2(newArr));
+        console.timeEnd('Sort')
     </script>
 </body>
 
