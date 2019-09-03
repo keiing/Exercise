@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    /**
+     * 事件循环机制
+     * 原因:主线程运行的，产生堆和栈
+     * 堆：存放 引用类型，入数组，对象，函数
+     * 栈: 存放 基本类型，以及引用类型的指针(通俗来讲就是地址,地址就是指向堆内存的)
+     * */    
+    /**
+     * 微任务:promise的then，asycn await process.nextTick(node);
+     * */ 
+     /**
+    console.log('0000')
+    async function fn1(){
+        console.log('1111')
+    }
+    fn1();
+    console.log('222222')
+    async function fn2(){
+        console.log('3333')
+    }
+    fn2();
+    console.log('4444')
+    */
+
+
+    /** //下面的重点对比
+    async function async1(){
+        console.log('async start');//2
+        await async2();
+        console.log('async end');//5
+    }
+    async function async2(){
+        console.log('async2');//3
+    }
+    console.log('script start');//1
+    async1();
+    setTimeout(()=>{
+        console.log('setTimout');//7
+    })
+    new Promise((resolve,reject)=>{
+        resolve();//4
+    }).then(()=>{
+        console.log('then')//6
+    })
+    */
+
+    /*----------------------------分割重点 自己对比*/
+    /*
+    async function async1(){
+        console.log('async start');//2
+        await async2();//3
+        console.log('async end');//7
+    }
+    async function async2(){
+        console.log('async2');//3
+        await async3();//4
+    }
+    async function async3(){
+        console.log('async3');//4 这时候 console.log('async end')会被插入到双重异步后
+    }
+    console.log('script start');//1
+    async1();//2
+    setTimeout(()=>{
+        console.log('setTimout');//8
+    })
+    new Promise((resolve,reject)=>{
+        resolve();//5 主线程执行完毕，开始微任务
+    }).then(()=>{
+        console.log('then')//6
+    });*/
+
+    async function async1(){
+        console.log('async start');//2
+        await async2();//3
+        console.log('async end');//8 双重异步等待
+    }
+    async function async2(){
+        await async3();//3
+        console.log('async2');//6 
+    }
+    async function async3(){
+        console.log('async3');//4 这时候 console.log('async end')会被插入到双重异步后
+    }
+    console.log('script start');//1
+    async1();//2 async1执行完毕，继续走setTimout
+    setTimeout(()=>{
+        console.log('setTimout');//8
+    })
+    new Promise((resolve,reject)=>{
+        resolve();//5 主线程执行完毕，开始微任务
+    }).then(()=>{
+        console.log('then')//7
+    })
+    </script>
+</body>
+</html>

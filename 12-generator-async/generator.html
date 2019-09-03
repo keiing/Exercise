@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    /**
+     *  ES6 的 generator
+     * generator 粘呢a特 ge ner a tor
+     * async 函数是 generator 函数的语法糖:内置执行器
+     * yield 到哪一步停止执行
+     * 
+     * */  
+     function *gen() {
+    yield 1111;
+    yield 2222;
+    return 3333;
+    return 4444;
+}
+    let f=gen();
+    console.log(f.next());//111 done:false
+    console.log(f.next());//222 done:false
+    console.log(f.next());//333 done:true
+    console.log(f.next());//undefined done:true
+
+
+    console.log("-------------------------------")
+function co(gen) {
+    var it = gen();
+    var ret = it.next();
+    console.log(ret)
+    ret.value.then(function(res) {
+        console.log(res)
+        it.next(res);
+    });
+}
+co(function *(){
+    console.log('11111');
+    yield (async function(){console.log(2222);return 2222})();
+    yield 2222;
+})
+
+function sayhello() {
+    return 'hellow'
+        console.log('hellow');
+}
+function helloworld() {
+    return 'world'
+    console.log('world');
+}
+
+function *code(){
+    var data1,data2;
+    yield data1=sayhello();
+    yield data2=helloworld();
+    // console.log(data1,data2);
+    return {data1,data2}
+}
+var codefn=code();
+console.log(codefn,"codefn")
+codefn.next();
+codefn.next();
+console.log(codefn.next(),'codefnReturn')
+    </script>
+</body>
+</html>

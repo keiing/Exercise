@@ -1,0 +1,31 @@
+<script>
+function *fn(){
+    let data;
+    yield data=Math.random();
+    yield data=data+1;
+    yield data=data+2;
+    return data;
+}
+let f=fn();
+console.log(f.next());
+console.log(f.next());
+console.log(f.next());
+console.log(f.next());
+
+
+/**
+let str='4241413,,234532.,54134,1341,,，';
+let reg=new RegExp(/(,{2})\s*|(,+$)/,'g');
+while(res=reg.exec(str)){
+    console.log(res.index,res[0],reg.lastIndex)
+}
+while(reg.exec(str)){
+    console.log()
+    console.log(reg.lastIndex)
+}
+str=str.replace(/,{2}?/g,',');
+console.log(str)
+str=str.replace(/([,.，]{2,})/g,',').replace(/\s+?|[,，]$/g,"");
+console.log(str);
+*/
+</script>

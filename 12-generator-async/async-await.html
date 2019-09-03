@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * async函数是generator函数的语法糖:内置执行器
+         * async函数默认返回一个promise的实例；默认是成功态，并且把该函数的返回值，传给then的第一个参数
+         * async 是主线程执行任务
+        */
+        // async function fn(){
+        //     return 100;
+        // }
+        // fn().then(function(data){
+        //     console.log(data)
+        // })
+        
+
+        /** async await*/
+        /**await 会把await下面的代码变成微任务;是异步的,但是await本身不是微任务，是同步执行的*/
+        async function name(){
+         console.log('1111')
+         await 1111;
+         return 1000;
+     };
+     name().then(function(data){
+         console.log(data);
+     })
+     function f(){
+    console.log(5);
+}
+console.log(2);
+async function fn(){
+    console.log(3);
+     /**await 会把await下面的代码变成微任务;是异步的,但是await本事不是微任务，是主线程 如果连续两个*/
+    await f();
+    await f();//会排到微任务队列
+    await f();//会等
+    console.log(1);
+}
+fn();
+console.log(4);
+
+
+     //2 3 5 4 1
+    </script>
+</body>
+</html>
