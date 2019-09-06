@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>
+            堆(引用类型:Object,Array)
+        </li>
+        <li>
+            栈(基本数据类型:Undefined,Null,Bollean,Number,String)：typeof null 虽然是object但是null instanceof Object 是false
+        </li>
+        <li>
+            池(常量:const)由堆和栈演生出来的池
+        </li>
+    </ul>
+    <p id="domp">曹曹</p>
+    <button id='removep'>移除p节点</button>
+    <script>
+    /**
+    * 堆(引用类型:Object,Array)
+    * 栈(基本数据类型:Undefined,Null,Bollean,Number,String)：typeof null 虽然是object但是null instanceof Object 是false
+    * 池(常量:const)由堆和栈演生出来的池
+    */
+        /**
+        *栈：栈就像乒乓球盒 先放进去的在栈底，最后放上去的在栈顶 并且每次存/取都只能一次存/取一个
+        
+        先进后出，后进先出
+        */
+        let arr=new Array();
+        //队列 先进先出
+        arr.unshift(1);
+        arr.unshift(2);
+        arr.unshift(3);
+        arr.pop();
+        // console.log(arr);//[3,2]
+
+        //堆栈 先进后出
+        let arr2=new Array();
+        arr2.push(1);
+        arr2.push(2);
+        arr2.push(3);
+        // arr.pop();//[1,2]
+
+        let a=10;
+        let b=a;
+        b=20;
+        // console.log(a);//10
+
+        /**内存的生命周期*/
+        let obj={aa:20,bb:30};//分配了内存
+        
+        // console.log(obj);//console.log(obj)这个就是内存的使用
+        //如果说下面再也没有用到obj对象了那么内存就会把它回收掉
+        let obk=obj;
+        obk.aa=10;
+        // console.log(obj.aa);//10
+
+
+        /**内存泄漏*/
+        function fn(){
+            let demo='我很帅';//demo="我很帅" window.demo=""我很帅
+        }
+        fn();//demo污染全局变量
+
+        function fn2(){
+            this.demo2=123;// this.demo2=123;
+        }
+        // fn2();//造成污染全局 函数自身调用，this指向全局window
+        var m=new fn2();
+        // console.log(demo2)
+        // console.log(m)
+
+        window.onload=()=>{
+            let domp=document.getElementById('domp');
+           let timeInterval=setInterval(()=>{
+                let time=new Date();
+                if(domp){
+                    domp.innerHTML=JSON.stringify(time);
+                };
+                console.log('tiem');
+            },1000);
+            let removep=document.getElementById('removep');
+            removep.onclick=()=>{
+                // 显式移除
+                clearInterval(timeInterval);
+                domp.remove();
+            }
+        }
+
+    </script>
+</body>
+</html>
