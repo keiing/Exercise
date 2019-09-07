@@ -61,37 +61,6 @@
         // console.log(obj.aa);//10
 
 
-        /**内存泄漏*/
-        function fn(){
-            let demo='我很帅';//demo="我很帅" window.demo=""我很帅
-        }
-        fn();//demo污染全局变量
-
-        function fn2(){
-            this.demo2=123;// this.demo2=123;
-        }
-        // fn2();//造成污染全局 函数自身调用，this指向全局window
-        var m=new fn2();
-        // console.log(demo2)
-        // console.log(m)
-
-        window.onload=()=>{
-            let domp=document.getElementById('domp');
-           let timeInterval=setInterval(()=>{
-                let time=new Date();
-                if(domp){
-                    domp.innerHTML=JSON.stringify(time);
-                };
-                console.log('tiem');
-            },1000);
-            let removep=document.getElementById('removep');
-            removep.onclick=()=>{
-                // 显式移除
-                clearInterval(timeInterval);
-                domp.remove();
-            }
-        }
-
     </script>
 </body>
 </html>
