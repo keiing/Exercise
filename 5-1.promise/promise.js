@@ -41,7 +41,7 @@ class Promise {
     constructor(executor) {
         //创建promise executor会立即执行
         this.value = undefined;//成功的值
-        this.reason = undefined;//失败的之
+        this.reason = undefined;//失败的值
         this.status = PENDING;
         this.onResolvedCallback = [];
         this.onRejectedCallback = [];
